@@ -8,6 +8,7 @@ const Music = () => {
   const [song, setSong] = useState([]);
   const [audio, setAudio] = useState("");
   const audioRef = useRef(null);
+  const [like, setLike] = useState(false);
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -46,6 +47,24 @@ const Music = () => {
       console.log("Data is not found");
     }
   };
+  const fetchTrackArtist = async () => {
+    const db = getDatabase(app);
+    const dataRef = ref(db, `artist`);
+    const snapshot = await get(dataRef);
+    if (snapshot.exists()) {
+      const entries = Object.values(snapshot.val());
+      setSong(entries);
+      // const entries1 = Object.entries(snapshot.val());
+
+      //   Find the entry where name is "token as id"
+      //   const foundEntry = entries.find(([key, value]) => value.token === id);
+      //   if (foundEntry) {
+      //     const [key, userData] = foundEntry;
+      //     setArtiseKey(key); // Output: user1 (or whatever the key is)
+    } else {
+      console.log("Data is not found");
+    }
+  };
   const handleAddSong = (id) => {
     setAudio(id);
     setIsPlaying(false);
@@ -54,30 +73,76 @@ const Music = () => {
   audio1.onloadedmetadata = () => {
     console.log(audio1.duration); // Set the duration when metadata is loaded
   };
-
+  const handleLikes = () => {
+    setLike(true);
+  };
+  const handleDislikes = () => {
+    setLike(false);
+  };
   console.log(song);
   useEffect(() => {
     fetchArtist();
   }, [audio, currentTrack]);
   return (
     <div className="music-player">
-      <div className=" ">
-        {song &&
-          song.map((item, index) => {
-            return (
-              <>
-                <div
-                  className="border"
-                  onClick={() => {
-                    handleAddSong(item.audioFile);
-                  }}
-                >
-                  <div>{item.title}</div>
-                  {/* <div onClick={togglePlayPause}>{item.audioFile} </div> */}
-                </div>
-              </>
-            );
-          })}
+      <div className="grid grid-cols-12">
+        <div className="col-span-3">dashboard</div>
+        <div className="col-span-9">
+          {song &&
+            song.map((item, index) => {
+              return (
+                <>
+                  <div
+                    key={index}
+                    className="border cursor-pointer shadow-sm rounded-lg font-semibold text-slate-500 bg-slate-200 m-3 p-4"
+                    onClick={() => {
+                      handleAddSong(item.audioFile);
+                    }}
+                  >
+                    <div className="grid grid-cols-4 text-centre items-center">
+                      <div className="w-16 h-16">
+                        <img
+                          className="w-full h-full object-cover rounded-md shadow-md"
+                          src={item.coverImage}
+                          alt={item.title}
+                        />
+                      </div>
+                      <div> {item.title}</div>
+                      <div>
+                        Genere -{" "}
+                        {item.genre ? (
+                          <>{item.genre}</>
+                        ) : (
+                          <>No Genre available</>
+                        )}{" "}
+                      </div>
+                      <div className="text-center">
+                        {like ? (
+                          <div className="w-8 h-8">
+                            <img
+                              onClick={handleDislikes}
+                              src="/likes_button/heart-svgrepo-com.png"
+                              alt=""
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-8 h-8">
+                            <img
+                              onClick={handleLikes}
+                              src="/likes_button/heart-svgrepo-com (1).png"
+                              alt=""
+                            />
+                          </div>
+                        )}
+                        {item.like}
+                      </div>
+                    </div>
+                    {/* <div onClick={togglePlayPause}>{item.audioFile} </div> */}
+                  </div>
+                </>
+              );
+            })}
+        </div>
       </div>
       <audio
         ref={audioRef}
@@ -85,12 +150,9 @@ const Music = () => {
         src={audio ? audio : song[currentTrack]?.audioFile}
         onEnded={handleNextTrack}
       ></audio>
-      <h3>{song[currentTrack]?.title}</h3>
-      <p>{song[currentTrack]?.audioFile}</p>
-      <p>{}</p>
-      Start
+
       <div>
-        <div className="fixed bottom-0 left-0 w-full bg-slate-100   text-center p-4">
+        <div className="fixed bottom-0 left-0 w-full bg-slate-200 rounded-t-lg shadow-inner    text-center p-4">
           <div>{/* <h3>{song[currentTrack]?.title}</h3> */}</div>
           <div className="grid grid-cols-11">
             <div className="col-span-4"></div>
