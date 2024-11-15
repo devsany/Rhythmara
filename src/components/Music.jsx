@@ -94,7 +94,7 @@ const Music = () => {
                 <>
                   <div
                     key={index}
-                    className="border cursor-pointer shadow-sm rounded-lg font-semibold text-slate-500 bg-slate-200 m-3 p-4"
+                    className="  cursor-pointer   rounded-l-full font-semibold text-slate-500 bg-slate-100 m-3 p-2"
                     onClick={() => {
                       handleAddSong(item.audioFile);
                     }}
@@ -102,7 +102,7 @@ const Music = () => {
                     <div className="grid grid-cols-4 text-centre items-center">
                       <div className="w-16 h-16">
                         <img
-                          className="w-full h-full object-cover rounded-md shadow-md"
+                          className="w-full h-full object-cover rounded-full shadow-md"
                           src={item.coverImage}
                           alt={item.title}
                         />
@@ -152,14 +152,14 @@ const Music = () => {
       ></audio>
 
       <div>
-        <div className="fixed bottom-0 left-0 w-full bg-slate-200 rounded-t-lg shadow-inner    text-center p-4">
+        <div className="fixed bottom-0 left-0 w-full bg-slate-100 rounded-t-lg shadow-inner    text-center p-1">
           <div>{/* <h3>{song[currentTrack]?.title}</h3> */}</div>
           <div className="grid grid-cols-11">
             <div className="col-span-4"></div>
-            <div className="  bg-blue-200 flex rounded-lg items-center text-center justify-center">
+            <div className="    flex rounded-lg items-center text-center justify-center">
               {" "}
               <button onClick={handlePrevTrack}>
-                <p className="tracking-tighter font-semibold text-gray-500 md:text-lg dark:text-gray-400">
+                <p className="tracking-tighter font-semibold text-gray-700 md:text-lg dark:text-gray-700">
                   Previous
                 </p>
               </button>
@@ -169,7 +169,7 @@ const Music = () => {
               <button onClick={togglePlayPause}>
                 {isPlaying ? (
                   <>
-                    <div className="flex items-center justify-center">
+                    <div className="flex mt-2 items-center justify-center">
                       <img
                         className="w-12"
                         src="/song_button/pause-circle-svgrepo-com.png"
@@ -179,7 +179,7 @@ const Music = () => {
                   </>
                 ) : (
                   <>
-                    <div className="flex items-center justify-center  ">
+                    <div className="flex mt-2 items-center justify-center  ">
                       <img
                         className="w-12"
                         src="/song_button/play-circle-svgrepo-com.png"
@@ -192,9 +192,9 @@ const Music = () => {
             </div>
             <div>
               {" "}
-              <div className="  bg-blue-200 flex rounded-lg items-center text-center justify-center">
+              <div className="flex rounded-lg items-center text-center justify-center">
                 <button onClick={handleNextTrack}>
-                  <p className="tracking-tighter pt-3 pb-3 font-semibold text-gray-500 md:text-lg dark:text-gray-400">
+                  <p className="tracking-tighter pt-4 pb-4 font-semibold text-gray-700 md:text-lg dark:text-gray-700">
                     Next
                   </p>
                 </button>
