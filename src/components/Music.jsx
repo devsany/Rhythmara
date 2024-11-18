@@ -148,7 +148,7 @@ const Music = () => {
         ref={audioRef}
         // src={song[currentTrack]?.audioFile}
         src={audio ? audio : song[currentTrack]?.audioFile}
-        onEnded={}
+        onEnded={handleNextTrack}
       ></audio>
 
       <div>
