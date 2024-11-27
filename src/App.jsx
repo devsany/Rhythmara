@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import Music from "./components/Music";
 import UploadSong from "./components/uploadSong/UploadSong";
+import Demo from "./components/Demo";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       {/* <UploadSong /> */}
+      <Demo />
       <Music />
     </>
   );
