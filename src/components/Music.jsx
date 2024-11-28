@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import app from "../firebase/firebaseConfig";
 import { getDatabase, get, ref, push, set, update } from "firebase/database";
 import SideLeftNav from "./Navbar/SideLeftNav";
+import { NavLink } from "react-router-dom";
 
 const Music = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -85,21 +86,73 @@ const Music = () => {
     fetchArtist();
   }, [audio, currentTrack]);
   return (
-    <div className="music-player">
-      <div className="grid grid-cols-12">
-        <div className="col-span-3">
-          <div className="">
+    <div className="music-player dark:bg-slate-600">
+      <div className="md:grid md:grid-cols-12  ">
+        <div className="md:col-span-3  ">
+          <div className="fixed left-0  ">
             <SideLeftNav />
           </div>
         </div>
-        <div className="col-span-9">
+        <div className="md:col-span-9  mb-20   md:ml-0 ml-10 ">
+          <div className=" md:flex hidden justify-between ">
+            <div className="flex gap-6 text-sm m-6 font-thin text-slate-600">
+              <div>
+                <NavLink
+                  className="hover:bg-blue-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                  to={"/"}
+                >
+                  Tracks
+                </NavLink>
+              </div>
+              <div>
+                <NavLink
+                  to={"/release"}
+                  className="hover:bg-yellow-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  New Release
+                </NavLink>
+              </div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/top_playlist"}
+                  className="hover:bg-cyan-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Top Playlist
+                </NavLink>
+              </div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/top_charts"}
+                  className="hover:bg-orange-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Top Charts
+                </NavLink>
+              </div>
+              <div>
+                <NavLink
+                  to={"/podcast"}
+                  className="hover:bg-green-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Podcast
+                </NavLink>
+              </div>
+              <div>Radio Station</div>
+            </div>
+            <div className="m-6"> hii</div>
+          </div>
+          <div className="mb-3 md:block hidden">
+            {" "}
+            <hr />
+          </div>
           {song &&
             song.map((item, index) => {
               return (
                 <>
                   <div
                     key={index}
-                    className="  cursor-pointer   rounded-l-full font-semibold text-slate-500 bg-slate-100 m-3 p-2"
+                    className="  cursor-pointer   rounded-l-full font-semibold   text-slate-500 bg-slate-50  ml-3 mb-3 p-2"
                     onClick={() => {
                       handleAddSong(item.audioFile);
                     }}
@@ -112,18 +165,18 @@ const Music = () => {
                           alt={item.title}
                         />
                       </div>
-                      <div> {item.title}</div>
+                      <div className="md:text-md text-sm"> {item.title}</div>
                       <div>
-                        Genere -{" "}
+                        {" "}
                         {item.genre ? (
-                          <>{item.genre}</>
+                          <div className="md:text-md text-sm">{item.genre}</div>
                         ) : (
                           <>No Genre available</>
                         )}{" "}
                       </div>
                       <div className="text-center">
                         {like ? (
-                          <div className="w-8 h-8">
+                          <div className="w-6 h-6">
                             <img
                               onClick={handleDislikes}
                               src="/likes_button/heart-svgrepo-com.png"
@@ -131,7 +184,7 @@ const Music = () => {
                             />
                           </div>
                         ) : (
-                          <div className="w-8 h-8">
+                          <div className="w-6 h-6">
                             <img
                               onClick={handleLikes}
                               src="/likes_button/heart-svgrepo-com (1).png"
