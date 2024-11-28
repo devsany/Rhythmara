@@ -138,7 +138,15 @@ const Music = () => {
                   Podcast
                 </NavLink>
               </div>
-              <div>Radio Station</div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/radio_station"}
+                  className="hover:bg-pink-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Radio Station
+                </NavLink>
+              </div>
             </div>
             <div className="m-6"> hii</div>
           </div>
