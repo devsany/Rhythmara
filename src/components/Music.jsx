@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import app from "../firebase/firebaseConfig";
 import { getDatabase, get, ref, push, set, update } from "firebase/database";
+import SideLeftNav from "./Navbar/SideLeftNav";
 
 const Music = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -86,7 +87,11 @@ const Music = () => {
   return (
     <div className="music-player">
       <div className="grid grid-cols-12">
-        <div className="col-span-3">dashboard</div>
+        <div className="col-span-3">
+          <div className="">
+            <SideLeftNav />
+          </div>
+        </div>
         <div className="col-span-9">
           {song &&
             song.map((item, index) => {

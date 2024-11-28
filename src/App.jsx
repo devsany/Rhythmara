@@ -5,26 +5,34 @@ import "./App.css";
 import Music from "./components/Music";
 import UploadSong from "./components/uploadSong/UploadSong";
 import Demo from "./components/Demo";
+import {
+  BrowserRouter,
+  NavLink,
+  Route,
+  Router,
+  Routes,
+} from "react-router-dom";
+import NewRelease from "./components/SideNav/NewRelease";
+import TopPlaylist from "./components/SideNav/TopPlaylist";
+import TopCharts from "./components/SideNav/TopCharts";
+import Podcast from "./components/SideNav/Podcast";
+import RadioStation from "./components/SideNav/RadioStation";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      {/* <UploadSong /> */}
-      hii
-      <div className="ml-3">
-        <audio controls>
-          <source
-            src="https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3"
-            // src="https://raw.githubusercontent.com/devsany/mp3-files-hosting/main/Second%20Hand%20Jawaani%20(Full%20Video%20Song)%20Cocktail%20Saif%20Ali%20Khan,%20Deepika%20Padukone%20Pritam.mp3"
-            type="audio/mpeg"
-          />
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-      {/* <Demo /> */}
-      <Music />
+      <BrowserRouter>
+        {/* <SideLeftNav /> */}
+        <Routes>
+          <Route path="/" element={<Music />} />
+          <Route path="/release" element={<NewRelease />} />
+          <Route path="/top_playlist" element={<TopPlaylist />} />
+          <Route path="/top_charts" element={<TopCharts />} />
+          <Route path="/podcast" element={<Podcast />} />
+          <Route path="/radio_station" element={<RadioStation />} />
+        </Routes>
+      </BrowserRouter>
+      {/* <Music /> */}
     </>
   );
 }
