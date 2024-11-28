@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { getDatabase, get, ref, push, set, update } from "firebase/database";
 import app from "../../firebase/firebaseConfig";
 import SideLeftNav from "../Navbar/SideLeftNav";
+import { NavLink } from "react-router-dom";
 
 const NewRelease = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -95,6 +96,122 @@ const NewRelease = () => {
           <div className="fixed left-0  ">
             <SideLeftNav />
           </div>
+        </div>
+        <div className="md:col-span-9  mb-20   md:ml-0 ml-10 ">
+          <div className=" md:flex hidden justify-between ">
+            <div className="flex gap-6 text-sm m-6 font-thin text-slate-600">
+              <div>
+                <NavLink
+                  className="hover:bg-blue-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                  to={"/"}
+                >
+                  Tracks
+                </NavLink>
+              </div>
+              <div>
+                <NavLink
+                  to={"/release"}
+                  className="hover:bg-yellow-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  New Release
+                </NavLink>
+              </div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/top_playlist"}
+                  className="hover:bg-cyan-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Top Playlist
+                </NavLink>
+              </div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/top_charts"}
+                  className="hover:bg-orange-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Top Charts
+                </NavLink>
+              </div>
+              <div>
+                <NavLink
+                  to={"/podcast"}
+                  className="hover:bg-green-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Podcast
+                </NavLink>
+              </div>
+              <div>
+                {" "}
+                <NavLink
+                  to={"/radio_station"}
+                  className="hover:bg-pink-100 hover:shadow-sm pl-2 pr-2 pt-1 pb-1 rounded-md"
+                >
+                  Radio Station
+                </NavLink>
+              </div>
+            </div>
+            <div className="m-6"> hii</div>
+          </div>
+          <div className="mb-3 md:block hidden">
+            {" "}
+            <hr />
+          </div>
+          {newRlease &&
+            newRlease.map((item, index) => {
+              return (
+                <>
+                  <div
+                    key={index}
+                    className="  cursor-pointer   rounded-l-full font-semibold   text-slate-500 bg-slate-50  ml-3 mb-3 p-2"
+                    onClick={() => {
+                      handleAddSong(item.audioFile);
+                    }}
+                  >
+                    <div className="grid grid-cols-4 text-centre items-center">
+                      <div className="w-16 h-16">
+                        <img
+                          className="w-full h-full object-cover rounded-full shadow-md"
+                          src={item.coverImage}
+                          alt={item.title}
+                        />
+                      </div>
+                      <div className="md:text-md text-sm"> {item.title}</div>
+                      <div>
+                        {" "}
+                        {item.genre ? (
+                          <div className="md:text-md text-sm">{item.genre}</div>
+                        ) : (
+                          <>No Genre available</>
+                        )}{" "}
+                      </div>
+                      <div className="text-center">
+                        {like ? (
+                          <div className="w-6 h-6">
+                            <img
+                              onClick={handleDislikes}
+                              src="/likes_button/heart-svgrepo-com.png"
+                              alt=""
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-6 h-6">
+                            <img
+                              onClick={handleLikes}
+                              src="/likes_button/heart-svgrepo-com (1).png"
+                              alt=""
+                            />
+                          </div>
+                        )}
+                        {item.like}
+                      </div>
+                    </div>
+                    {/* <div onClick ={togglePlayPause}>{item.audioFile} </div> */}
+                  </div>
+                </>
+              );
+            })}
         </div>
         <div className="col-span-9  mb-20    ">
           {newRlease &&
