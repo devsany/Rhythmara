@@ -12,11 +12,13 @@ import {
   Router,
   Routes,
 } from "react-router-dom";
-import NewRelease from "./components/SideNav/NewRelease";
 import TopPlaylist from "./components/SideNav/TopPlaylist";
 import TopCharts from "./components/SideNav/TopCharts";
 import Podcast from "./components/SideNav/Podcast";
 import RadioStation from "./components/SideNav/RadioStation";
+import Artists from "./components/SideNav/Artists";
+import NewRelease from "./components/SideNav/NewRelease";
+import ArtistDataView from "./components/SideNav/ArtistDataView";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/top_charts" element={<TopCharts />} />
           <Route path="/podcast" element={<Podcast />} />
           <Route path="/radio_station" element={<RadioStation />} />
+          <Route path="/artists" element={<Artists />} />
+          <Route path="/artists/:id" element={<ArtistDataView />} />
         </Routes>
       </BrowserRouter>
       {/* <Music /> */}

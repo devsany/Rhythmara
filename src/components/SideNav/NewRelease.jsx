@@ -158,116 +158,62 @@ const NewRelease = () => {
             {" "}
             <hr />
           </div>
-          {newRlease &&
-            newRlease.map((item, index) => {
-              return (
-                <>
-                  <div
-                    key={index}
-                    className="  cursor-pointer   rounded-l-full font-semibold   text-slate-500 bg-slate-50  ml-3 mb-3 p-2"
-                    onClick={() => {
-                      handleAddSong(item.audioFile);
-                    }}
-                  >
-                    <div className="grid grid-cols-4 text-centre items-center">
-                      <div className="w-16 h-16">
-                        <img
-                          className="w-full h-full object-cover rounded-full shadow-md"
-                          src={item.coverImage}
-                          alt={item.title}
-                        />
+          <div className="col-span-9  mb-20    ">
+            {newRlease &&
+              newRlease.map((item, index) => {
+                return (
+                  <>
+                    <div
+                      key={index}
+                      className="  cursor-pointer   rounded-l-full font-semibold   text-slate-500 bg-slate-50  ml-3 mb-3 p-2"
+                      onClick={() => {
+                        handleAddSong(item.audioFile);
+                      }}
+                    >
+                      <div className="grid grid-cols-4 text-centre items-center">
+                        <div className="w-16 h-16">
+                          <img
+                            className="w-full h-full object-cover rounded-full shadow-md"
+                            src={item.coverImage}
+                            alt={item.title}
+                          />
+                        </div>
+                        <div> {item.title}</div>
+                        <div>
+                          Genere -{" "}
+                          {item.genre ? (
+                            <>{item.genre}</>
+                          ) : (
+                            <>No Genre available</>
+                          )}{" "}
+                        </div>
+                        <div className="text-center">
+                          {like ? (
+                            <div className="w-6 h-6">
+                              <img
+                                onClick={handleDislikes}
+                                src="/likes_button/heart-svgrepo-com.png"
+                                alt=""
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-6 h-6">
+                              <img
+                                onClick={handleLikes}
+                                src="/likes_button/heart-svgrepo-com (1).png"
+                                alt=""
+                              />
+                            </div>
+                          )}
+                          {item.like}
+                        </div>
                       </div>
-                      <div className="md:text-md text-sm"> {item.title}</div>
-                      <div>
-                        {" "}
-                        {item.genre ? (
-                          <div className="md:text-md text-sm">{item.genre}</div>
-                        ) : (
-                          <>No Genre available</>
-                        )}{" "}
-                      </div>
-                      <div className="text-center">
-                        {like ? (
-                          <div className="w-6 h-6">
-                            <img
-                              onClick={handleDislikes}
-                              src="/likes_button/heart-svgrepo-com.png"
-                              alt=""
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-6 h-6">
-                            <img
-                              onClick={handleLikes}
-                              src="/likes_button/heart-svgrepo-com (1).png"
-                              alt=""
-                            />
-                          </div>
-                        )}
-                        {item.like}
-                      </div>
+                      {/* <div onClick ={togglePlayPause}>{item.audioFile} </div> */}
                     </div>
-                    {/* <div onClick ={togglePlayPause}>{item.audioFile} </div> */}
-                  </div>
-                </>
-              );
-            })}
-        </div>
-        <div className="col-span-9  mb-20    ">
-          {newRlease &&
-            newRlease.map((item, index) => {
-              return (
-                <>
-                  <div
-                    key={index}
-                    className="  cursor-pointer   rounded-l-full font-semibold   text-slate-500 bg-slate-50  ml-3 mb-3 p-2"
-                    onClick={() => {
-                      handleAddSong(item.audioFile);
-                    }}
-                  >
-                    <div className="grid grid-cols-4 text-centre items-center">
-                      <div className="w-16 h-16">
-                        <img
-                          className="w-full h-full object-cover rounded-full shadow-md"
-                          src={item.coverImage}
-                          alt={item.title}
-                        />
-                      </div>
-                      <div> {item.title}</div>
-                      <div>
-                        Genere -{" "}
-                        {item.genre ? (
-                          <>{item.genre}</>
-                        ) : (
-                          <>No Genre available</>
-                        )}{" "}
-                      </div>
-                      <div className="text-center">
-                        {like ? (
-                          <div className="w-6 h-6">
-                            <img
-                              onClick={handleDislikes}
-                              src="/likes_button/heart-svgrepo-com.png"
-                              alt=""
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-6 h-6">
-                            <img
-                              onClick={handleLikes}
-                              src="/likes_button/heart-svgrepo-com (1).png"
-                              alt=""
-                            />
-                          </div>
-                        )}
-                        {item.like}
-                      </div>
-                    </div>
-                    {/* <div onClick ={togglePlayPause}>{item.audioFile} </div> */}
-                  </div>
-                </>
-              );
-            })}
+                  </>
+                );
+              })}
+          </div>
         </div>
       </div>
       <audio
