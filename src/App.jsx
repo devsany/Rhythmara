@@ -19,6 +19,8 @@ import RadioStation from "./components/SideNav/RadioStation";
 import Artists from "./components/SideNav/Artists";
 import NewRelease from "./components/SideNav/NewRelease";
 import ArtistDataView from "./components/SideNav/ArtistDataView";
+import Albums from "./components/SideNav/Albums";
+import AlbumsThroughArtistId from "./components/SideNav/AlbumsThroughArtistId";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           <Route path="/radio_station" element={<RadioStation />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/artists/:id" element={<ArtistDataView />} />
+          <Route path="/albums" element={<Albums />} />
+          <Route path="/albums/:id" element={<AlbumsThroughArtistId />} />
         </Routes>
       </BrowserRouter>
       {/* <Music /> */}
