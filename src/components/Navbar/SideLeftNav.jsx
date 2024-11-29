@@ -101,7 +101,7 @@ const SideLeftNav = () => {
         {/* custome navbar */}
         <aside
           id="sidebar-multi-level-sidebar"
-          className={` fixed left-0 z-40 w-[300px] h-screen transition-transform  ${
+          className={` fixed left-0 z-40 w-[300px]  h-screen transition-transform  ${
             isSidebarOpen ? " -translate-x-full" : " -translate-x-0"
           }  sm:translate-x-0`}
         >

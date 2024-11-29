@@ -206,7 +206,7 @@ const Albums = () => {
                     <NavLink to={item.artistNameKey}>
                       <div className="group relative p-4 rounded-lg overflow-hidden">
                         {/* <!-- Gradient Background --> */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 bg-[length:200%_200%] opacity-0 group-hover:opacity-100 group-hover:animate-gradient-flow transition-all duration-700"></div>
 
                         {/* <!-- Content --> */}
                         <div className="relative z-10 p-6 bg-white rounded-lg shadow-lg">

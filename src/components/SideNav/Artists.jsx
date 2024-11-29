@@ -67,20 +67,7 @@ const Artists = () => {
   //       console.log("Data is not found");
   //     }
   //   };
-  const handleAddSong = (id) => {
-    setAudio(id);
-    setIsPlaying(false);
-  };
-  const audio1 = new Audio(audio ? audio : song[currentTrack]?.audioFile);
-  audio1.onloadedmetadata = () => {
-    console.log(audio1.duration); // Set the duration when metadata is loaded
-  };
-  const handleLikes = () => {
-    setLike(true);
-  };
-  const handleDislikes = () => {
-    setLike(false);
-  };
+
   const newRlease = song.filter((item) => {
     return item.category === "newReleases";
   });
@@ -107,7 +94,7 @@ const Artists = () => {
     }
   };
 
-  console.log(newRlease);
+ 
   console.log(song);
   useEffect(() => {
     fetchArtist();

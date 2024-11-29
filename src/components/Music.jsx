@@ -1,8 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import app from "../firebase/firebaseConfig";
-import { getDatabase, get, ref, push, set, update } from "firebase/database";
+import {
+  getDatabase,
+  get,
+  ref,
+  push,
+  set,
+  update,
+  increment,
+} from "firebase/database";
 import SideLeftNav from "./Navbar/SideLeftNav";
 import { NavLink } from "react-router-dom";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const Music = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -10,7 +19,7 @@ const Music = () => {
   const [song, setSong] = useState([]);
   const [audio, setAudio] = useState("");
   const audioRef = useRef(null);
-  const [like, setLike] = useState(false);
+  const [likeState, setLikeState] = useState({});
 
   const togglePlayPause = () => {
     if (isPlaying) {
@@ -36,8 +45,12 @@ const Music = () => {
     const dataRef = ref(db, `track`);
     const snapshot = await get(dataRef);
     if (snapshot.exists()) {
-      const entries = Object.values(snapshot.val());
-      setSong(entries);
+      const data = snapshot.val();
+      const formattedData = Object.entries(data).map(([id, value]) => ({
+        id, // unique ID
+        ...value, // spread the rest of the data
+      }));
+      setSong(formattedData);
       // const entries1 = Object.entries(snapshot.val());
 
       //   Find the entry where name is "token as id"
@@ -49,24 +62,7 @@ const Music = () => {
       console.log("Data is not found");
     }
   };
-  const fetchTrackArtist = async () => {
-    const db = getDatabase(app);
-    const dataRef = ref(db, `artist`);
-    const snapshot = await get(dataRef);
-    if (snapshot.exists()) {
-      const entries = Object.values(snapshot.val());
-      setSong(entries);
-      // const entries1 = Object.entries(snapshot.val());
 
-      //   Find the entry where name is "token as id"
-      //   const foundEntry = entries.find(([key, value]) => value.token === id);
-      //   if (foundEntry) {
-      //     const [key, userData] = foundEntry;
-      //     setArtiseKey(key); // Output: user1 (or whatever the key is)
-    } else {
-      console.log("Data is not found");
-    }
-  };
   const handleAddSong = (id) => {
     setAudio(id);
     setIsPlaying(false);
@@ -75,11 +71,46 @@ const Music = () => {
   audio1.onloadedmetadata = () => {
     console.log(audio1.duration); // Set the duration when metadata is loaded
   };
-  const handleLikes = () => {
-    setLike(true);
+  const handleLike = async (id) => {
+    const db = getDatabase(app);
+    const trackRef = ref(db, `track/${id}`);
+    try {
+      // Increment the like count in Firebase
+      await update(trackRef, {
+        like: increment(1),
+      });
+      console.log("Liked the song successfully!");
+      setLikeState((prevState) => ({
+        ...prevState,
+        [id]: true, // Set like for the specific object
+      }));
+      console.log(`Liked song with ID: ${id}`);
+      // Show dislike button
+      fetchArtist(); // Refresh song list to update UI
+    } catch (error) {
+      console.error("Error liking the song:", error);
+    }
   };
-  const handleDislikes = () => {
-    setLike(false);
+
+  const handleDislike = async (id) => {
+    const db = getDatabase(app);
+    const trackRef = ref(db, `track/${id}`);
+    try {
+      // Decrement the like count in Firebase
+      await update(trackRef, {
+        like: increment(-1),
+      });
+      console.log("Disliked the song successfully!");
+      setLikeState((prevState) => ({
+        ...prevState,
+        [id]: false, // Set dislike for the specific object
+      }));
+      console.log(`Disliked song with ID: ${id}`);
+      // Show like button
+      fetchArtist(); // Refresh song list to update UI
+    } catch (error) {
+      console.error("Error disliking the song:", error);
+    }
   };
   console.log(song);
   useEffect(() => {
@@ -182,25 +213,54 @@ const Music = () => {
                           <>No Genre available</>
                         )}{" "}
                       </div>
-                      <div className="text-center">
-                        {like ? (
-                          <div className="w-6 h-6">
-                            <img
-                              onClick={handleDislikes}
-                              src="/likes_button/heart-svgrepo-com.png"
-                              alt=""
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-6 h-6">
-                            <img
-                              onClick={handleLikes}
-                              src="/likes_button/heart-svgrepo-com (1).png"
-                              alt=""
-                            />
-                          </div>
-                        )}
-                        {item.like}
+
+                      <div className="text-center flex gap-8">
+                        <div>
+                          <button
+                            onClick={() =>
+                              likeState[item.id]
+                                ? handleDislike(item.id)
+                                : handleLike(item.id)
+                            }
+                          >
+                            {likeState[item.id] ? (
+                              <>
+                                <svg
+                                  class="w-6 h-6 text-gray-800 dark:text-white"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z" />
+                                </svg>
+                              </>
+                            ) : (
+                              <>
+                                <svg
+                                  class="w-6 h-6 text-gray-800 dark:text-white"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="24"
+                                  height="24"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+                                  />
+                                </svg>
+                              </>
+                            )}
+                          </button>
+                        </div>
+                        <div>{item.like || "0"}</div>
                       </div>
                     </div>
                     {/* <div onClick ={togglePlayPause}>{item.audioFile} </div> */}

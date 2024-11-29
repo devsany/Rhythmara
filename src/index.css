@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.image-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+}
+
+.like-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.like-button,
+.dislike-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.like-svg,
+.dislike-svg {
+  width: 24px;
+  height: 24px;
+  fill: #888;
+}
+
+.like-button:hover .like-svg,
+.dislike-button:hover .dislike-svg {
+  fill: #f00;
+}

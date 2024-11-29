@@ -21,12 +21,15 @@ import NewRelease from "./components/SideNav/NewRelease";
 import ArtistDataView from "./components/SideNav/ArtistDataView";
 import Albums from "./components/SideNav/Albums";
 import AlbumsThroughArtistId from "./components/SideNav/AlbumsThroughArtistId";
+import HeaderNav from "./components/Navbar/HeaderNav";
+import Check from "./components/SideNav/Check";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         {/* <SideLeftNav /> */}
+        <HeaderNav />
         <Routes>
           <Route path="/" element={<Music />} />
           <Route path="/release" element={<NewRelease />} />
